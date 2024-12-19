@@ -10,8 +10,23 @@
 /* ***************************************************************************/
 
 #include "stm32_wrapper_gpio.h"
+#include "CircularBuffer.h"
 #include <cstring>  // For memset and strlen
 #include <cstdlib>  // For malloc and free
+
+
+
+// Définition des buffers circulaires pour les USART
+CircularBuffer<char, 256> tx_buffer_usart1;
+CircularBuffer<char, 256> rx_buffer_usart1;
+
+CircularBuffer<char, 256> tx_buffer_usart2;
+CircularBuffer<char, 256> rx_buffer_usart2;
+
+CircularBuffer<char, 256> tx_buffer_usart3;
+CircularBuffer<char, 256> rx_buffer_usart3;
+
+
 /*================================================*/
 /*     Part 1: Functions For PinAsInput Class     */
 /*================================================*/
@@ -387,5 +402,4 @@ void config()
   // Activer l'USART2
   USART_Cmd(USART2, ENABLE);
 }
-
 

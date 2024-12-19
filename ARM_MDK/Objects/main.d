@@ -1,5 +1,6 @@
 .\objects\main.o: ..\main.cpp
 .\objects\main.o: ..\serial.h
+.\objects\main.o: ..\CircularBuffer.h
 .\objects\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
 .\objects\main.o: ..\stm32_wrapper_gpio.h
 .\objects\main.o: ..\..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\stm32f10x.h
@@ -13,5 +14,7 @@
 .\objects\main.o: ..\..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_usart.h
 .\objects\main.o: ..\Pin_Mode_Names.h
 .\objects\main.o: ..\Serial_Config.h
+.\objects\main.o: ..\CircularBuffer.h
 .\objects\main.o: ..\stm32_wrapper_gpio.h
+.\objects\main.o: ..\CircularBuffer.h
 .\objects\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h

@@ -27,24 +27,93 @@ Project File Date:  12/19/2024
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 7 (build 960)', folder: 'C:\Keil_v5\ARM\ARMCC\Bin'
 Build target 'Target 1'
-compiling stm32_wrapper_gpio.c...
-..\stm32_wrapper_gpio.h(16): warning:  #1295-D: Deprecated declaration config - give arg types
-  void config();
-..\stm32_wrapper_gpio.h(17): warning:  #1295-D: Deprecated declaration config1 - give arg types
-  void config1();
-..\stm32_wrapper_gpio.c: 2 warnings, 0 errors
-compiling stm32f10x_gpio.c...
-compiling stm32f10x_dma.c...
 compiling main.cpp...
-compiling stm32f10x_usart.c...
-compiling stm32f10x_rcc.c...
-compiling misc.c...
-assembling startup_stm32f10x_md.s...
-compiling system_stm32f10x.c...
-compiling core_cm3.c...
-linking...
-Program Size: Code=2352 RO-data=268 RW-data=20 ZI-data=1636  
-".\Objects\manip.axf" - 0 Error(s), 2 Warning(s).
+..\CircularBuffer.h(7): error:  #321: data member initializer is not allowed
+      unsigned int head = 0;
+..\CircularBuffer.h(8): error:  #321: data member initializer is not allowed
+      unsigned int tail = 0;
+..\CircularBuffer.h(9): error:  #321: data member initializer is not allowed
+      unsigned int count = 0;
+..\CircularBuffer.h(4): error:  #247: class template "CircularBuffer"  has already been defined
+  class CircularBuffer {
+..\CircularBuffer.h(4): error:  #247: class template "CircularBuffer"  has already been defined
+  class CircularBuffer {
+..\main.cpp: 0 warnings, 5 errors
+compiling stm32_wrapper_gpio.c...
+..\CircularBuffer.h(3): error:  #77-D: this declaration has no storage class or type specifier
+  template <typename T, unsigned int Size>
+..\CircularBuffer.h(3): error:  #65: expected a ";"
+  template <typename T, unsigned int Size>
+..\CircularBuffer.h(25): warning:  #12-D: parsing restarts here after previous syntax error
+              return item;
+..\CircularBuffer.h(26): error:  #169: expected a declaration
+          }
+..\CircularBuffer.h(28): error:  #169: expected a declaration
+      }
+..\CircularBuffer.h(47): warning:  #12-D: parsing restarts here after previous syntax error
+  };
+..\stm32_wrapper_gpio.h(11): error:  #260-D: explicit type is missing ("int" assumed)
+  extern CircularBuffer<char, 256> tx_buffer_usart1;
+..\stm32_wrapper_gpio.h(11): error:  #65: expected a ";"
+  extern CircularBuffer<char, 256> tx_buffer_usart1;
+..\stm32_wrapper_gpio.h(12): error:  #260-D: explicit type is missing ("int" assumed)
+  extern CircularBuffer<char, 256> rx_buffer_usart1;
+..\stm32_wrapper_gpio.h(12): error:  #65: expected a ";"
+  extern CircularBuffer<char, 256> rx_buffer_usart1;
+..\stm32_wrapper_gpio.h(14): error:  #260-D: explicit type is missing ("int" assumed)
+  extern CircularBuffer<char, 256> tx_buffer_usart2;
+..\stm32_wrapper_gpio.h(14): error:  #65: expected a ";"
+  extern CircularBuffer<char, 256> tx_buffer_usart2;
+..\stm32_wrapper_gpio.h(15): error:  #260-D: explicit type is missing ("int" assumed)
+  extern CircularBuffer<char, 256> rx_buffer_usart2;
+..\stm32_wrapper_gpio.h(15): error:  #65: expected a ";"
+  extern CircularBuffer<char, 256> rx_buffer_usart2;
+..\stm32_wrapper_gpio.h(17): error:  #260-D: explicit type is missing ("int" assumed)
+  extern CircularBuffer<char, 256> tx_buffer_usart3;
+..\stm32_wrapper_gpio.h(17): error:  #65: expected a ";"
+  extern CircularBuffer<char, 256> tx_buffer_usart3;
+..\stm32_wrapper_gpio.h(18): error:  #260-D: explicit type is missing ("int" assumed)
+  extern CircularBuffer<char, 256> rx_buffer_usart3;
+..\stm32_wrapper_gpio.h(18): error:  #65: expected a ";"
+  extern CircularBuffer<char, 256> rx_buffer_usart3;
+..\stm32_wrapper_gpio.h(23): error:  #20: identifier "tx_buffer_usart1" is undefined
+          if (!tx_buffer_usart1.isEmpty()) {
+..\stm32_wrapper_gpio.h(32): error:  #20: identifier "rx_buffer_usart1" is undefined
+          rx_buffer_usart1.push(data);
+..\stm32_wrapper_gpio.h(39): error:  #20: identifier "tx_buffer_usart2" is undefined
+          if (!tx_buffer_usart2.isEmpty()) {
+..\stm32_wrapper_gpio.h(48): error:  #20: identifier "rx_buffer_usart2" is undefined
+          rx_buffer_usart2.push(data);
+..\stm32_wrapper_gpio.h(55): error:  #20: identifier "tx_buffer_usart3" is undefined
+          if (!tx_buffer_usart3.isEmpty()) {
+..\stm32_wrapper_gpio.h(64): error:  #20: identifier "rx_buffer_usart3" is undefined
+          rx_buffer_usart3.push(data);
+..\stm32_wrapper_gpio.h(99): warning:  #1295-D: Deprecated declaration config - give arg types
+  void config();
+..\stm32_wrapper_gpio.h(100): warning:  #1295-D: Deprecated declaration config1 - give arg types
+  void config1();
+..\CircularBuffer.h(3): error:  #77-D: this declaration has no storage class or type specifier
+  template <typename T, unsigned int Size>
+..\CircularBuffer.h(3): error:  #65: expected a ";"
+  template <typename T, unsigned int Size>
+..\CircularBuffer.h(25): warning:  #12-D: parsing restarts here after previous syntax error
+              return item;
+..\CircularBuffer.h(26): error:  #169: expected a declaration
+          }
+..\CircularBuffer.h(28): error:  #169: expected a declaration
+      }
+..\CircularBuffer.h(47): warning:  #12-D: parsing restarts here after previous syntax error
+  };
+..\stm32_wrapper_gpio.c(20): error:  #77-D: this declaration has no storage class or type specifier
+  CircularBuffer<char, 256> tx_buffer_usart1;
+..\stm32_wrapper_gpio.c(20): error:  #65: expected a ";"
+  CircularBuffer<char, 256> tx_buffer_usart1;
+..\stm32_wrapper_gpio.c(21): error:  #77-D: this declaration has no storage class or type specifier
+  CircularBuffer<char, 256> rx_buffer_usart1;
+..\stm32_wrapper_gpio.c(21): error:  #65: expected a ";"
+  CircularBuffer<char, 256> rx_buffer_usart1;
+..\stm32_wrapper_gpio.c: 6 warnings, 30 errors
+".\Objects\manip.axf" - 35 Error(s), 6 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -57,7 +126,8 @@ Package Vendor: Keil
   C:/Users/achre/AppData/Local/Arm/Packs/Keil/STM32F1xx_DFP/2.4.0/Device/Include
 
 <h2>Collection of Component Files used:</h2>
-Build Time Elapsed:  00:00:03
+Target not created.
+Build Time Elapsed:  00:00:01
 </pre>
 </body>
 </html>

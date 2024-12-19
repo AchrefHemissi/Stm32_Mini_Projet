@@ -2,13 +2,96 @@
 #include "stm32f10x_usart.h"
 #include "Pin_Mode_Names.h"
 #include <Serial_Config.h>  // Fichier où sont définis les #define COM1, COM2, COM3, CONFIG_8N1, etc.
+#include "CircularBuffer.h"
 
 #ifndef __STM32_WRAPPER_GPIO_H
 #define __STM32_WRAPPER_GPIO_H
 
+// Buffers circulaires pour gérer les données des interruptions USART
+extern CircularBuffer<char, 256> tx_buffer_usart1;
+extern CircularBuffer<char, 256> rx_buffer_usart1;
+
+extern CircularBuffer<char, 256> tx_buffer_usart2;
+extern CircularBuffer<char, 256> rx_buffer_usart2;
+
+extern CircularBuffer<char, 256> tx_buffer_usart3;
+extern CircularBuffer<char, 256> rx_buffer_usart3;
+
+// Handler pour USART1
+void USART1_IRQHandler(void) {
+    if (USART_GetITStatus(USART1, USART_IT_TXE) != RESET) {
+        if (!tx_buffer_usart1.isEmpty()) {
+            USART_SendData(USART1, tx_buffer_usart1.pop());
+        } else {
+            USART_ITConfig(USART1, USART_IT_TXE, DISABLE);
+        }
+    }
+
+    if (USART_GetITStatus(USART1, USART_IT_RXNE) != RESET) {
+        char data = USART_ReceiveData(USART1);
+        rx_buffer_usart1.push(data);
+    }
+}
+
+// Handler pour USART2
+void USART2_IRQHandler(void) {
+    if (USART_GetITStatus(USART2, USART_IT_TXE) != RESET) {
+        if (!tx_buffer_usart2.isEmpty()) {
+            USART_SendData(USART2, tx_buffer_usart2.pop());
+        } else {
+            USART_ITConfig(USART2, USART_IT_TXE, DISABLE);
+        }
+    }
+
+    if (USART_GetITStatus(USART2, USART_IT_RXNE) != RESET) {
+        char data = USART_ReceiveData(USART2);
+        rx_buffer_usart2.push(data);
+    }
+}
+
+// Handler pour USART3
+void USART3_IRQHandler(void) {
+    if (USART_GetITStatus(USART3, USART_IT_TXE) != RESET) {
+        if (!tx_buffer_usart3.isEmpty()) {
+            USART_SendData(USART3, tx_buffer_usart3.pop());
+        } else {
+            USART_ITConfig(USART3, USART_IT_TXE, DISABLE);
+        }
+    }
+
+    if (USART_GetITStatus(USART3, USART_IT_RXNE) != RESET) {
+        char data = USART_ReceiveData(USART3);
+        rx_buffer_usart3.push(data);
+    }
+}
+
+// Configuration des interruptions NVIC pour les USART
+void configure_usart_interrupts(USART_TypeDef* usart) {
+    NVIC_InitTypeDef NVIC_InitStructure;
+
+    if (usart == USART1) {
+        NVIC_InitStructure.NVIC_IRQChannel = USART1_IRQn;
+    } else if (usart == USART2) {
+        NVIC_InitStructure.NVIC_IRQChannel = USART2_IRQn;
+    } else if (usart == USART3) {
+        NVIC_InitStructure.NVIC_IRQChannel = USART3_IRQn;
+    }
+
+    NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
+    NVIC_InitStructure.NVIC_IRQChannelSubPriority = 1;
+    NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+    NVIC_Init(&NVIC_InitStructure);
+
+    // Activer les interruptions RXNE
+    USART_ITConfig(usart, USART_IT_RXNE, ENABLE);
+}
+
+
 #ifdef __cplusplus
 extern "C" {
 #endif
+	
+
 
 /* =======================================*/
 /* 1 : Functions For PinAsInput Class --- */

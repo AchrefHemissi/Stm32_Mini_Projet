@@ -1,6 +1,6 @@
 #ifndef SERIAL_H
 #define SERIAL_H
-
+#include "CircularBuffer.h"
 #include <stdint.h>
 #include <stm32_wrapper_gpio.h>
 
@@ -72,6 +72,57 @@ public:
 		{
 			return usart;
 		}
+		
+		void ITprintchaine(const char *chaine, uint16_t length, USART_TypeDef* usart) {
+			// Choose the appropriate tx_buffer based on USART instance
+			CircularBuffer<char, 256>* tx_buffer;
+
+			if (usart == USART1) {
+					tx_buffer = &tx_buffer_usart1;
+			} else if (usart == USART2) {
+					tx_buffer = &tx_buffer_usart2;
+			} else if (usart == USART3) {
+					tx_buffer = &tx_buffer_usart3;
+			}
+
+			if (tx_buffer) {
+					for (uint16_t i = 0; i < length; ++i) {
+							tx_buffer->push(chaine[i]); // Ajouter chaque caractère au buffer d'envoi
+					}
+
+					// Activer l'interruption TXE si le buffer n'est pas vide
+					if (!tx_buffer->isEmpty()) {
+							USART_ITConfig(usart, USART_IT_TXE, ENABLE); // Activer l'interruption TXE
+					}
+			}
+	}
+
+		char* ITreadchaine(uint16_t length, USART_TypeDef* usart) {
+    static char buffer[256]; // Buffer temporaire pour stocker les données
+    uint16_t i = 0;
+
+    // Choisir le buffer de réception approprié selon l'USART
+    CircularBuffer<char, 256>* rx_buffer ;
+
+    if (usart == USART1) {
+        rx_buffer = &rx_buffer_usart1;
+    } else if (usart == USART2) {
+        rx_buffer = &rx_buffer_usart2;
+    } else if (usart == USART3) {
+        rx_buffer = &rx_buffer_usart3;
+    }
+
+    if (rx_buffer) {
+        while (i < length && !rx_buffer->isEmpty()) {
+            buffer[i++] = rx_buffer->pop(); // Lire les données depuis le buffer RX
+        }
+        buffer[i] = '\0'; // Ajouter le caractère nul à la fin de la chaîne
+    }
+
+    return buffer;
+}
+
+
 };
 
 }  // namespace OOlayer

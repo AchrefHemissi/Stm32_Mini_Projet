@@ -12,6 +12,8 @@
 .\objects\stm32_wrapper_gpio.o: ..\..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_usart.h
 .\objects\stm32_wrapper_gpio.o: ..\Pin_Mode_Names.h
 .\objects\stm32_wrapper_gpio.o: ..\Serial_Config.h
+.\objects\stm32_wrapper_gpio.o: ..\CircularBuffer.h
+.\objects\stm32_wrapper_gpio.o: ..\CircularBuffer.h
 .\objects\stm32_wrapper_gpio.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\cstring
 .\objects\stm32_wrapper_gpio.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 .\objects\stm32_wrapper_gpio.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\cstdlib
