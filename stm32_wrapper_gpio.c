@@ -201,7 +201,7 @@ USART_TypeDef* get_usart_instance(COMPort comport) {
     }
 }
 // Updated serial_init function using the mapping functions
-void serial_init(COMPort comport, PinName tx, PinName rx, Speed speed, Config config, Mode mode) {
+void serial_init(COMPort comport, PinName tx, PinName rx, Speed speed, Config config, Mode mode, USART_TypeDef* usart) {
     USART_InitTypeDef USART_InitStructure;
     GPIO_InitTypeDef GPIO_InitStructure;
     RCC_APB2PeriphClockCmd(RCC_APB2Periph_AFIO, ENABLE);
@@ -247,6 +247,25 @@ void serial_init(COMPort comport, PinName tx, PinName rx, Speed speed, Config co
     // Initialize and enable USART
     USART_Init(get_usart_instance(comport), &USART_InitStructure);
     USART_Cmd(get_usart_instance(comport), ENABLE);
+		
+		// Configure NVIC for USART interrupts
+    NVIC_InitTypeDef NVIC_InitStructure;
+    
+    // Configure based on which USART is being used
+    if(usart == USART1) {
+        NVIC_InitStructure.NVIC_IRQChannel = USART1_IRQn;
+    }
+    else if(usart == USART2) {
+        NVIC_InitStructure.NVIC_IRQChannel = USART2_IRQn;
+    }
+    else if(usart == USART3) {
+        NVIC_InitStructure.NVIC_IRQChannel = USART3_IRQn;
+    }
+    
+    NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
+    NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
+    NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+    NVIC_Init(&NVIC_InitStructure);
 }
 // Fonction pour envoyer une chaîne de caractères via un USART donné en mode polling
 void serial_print(const char *chaine, uint16_t length, USART_TypeDef* usart) {

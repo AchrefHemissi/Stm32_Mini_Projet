@@ -35,7 +35,7 @@ static int get_gpio_in_mode (PinInMode mode);
 static GPIO_TypeDef* get_gpioport (PinName pin);
 	
 /* Serial*/
-void serial_init(COMPort comport, PinName tx, PinName rx, Speed speed, Config config, Mode mode);
+void serial_init(COMPort comport, PinName tx, PinName rx, Speed speed, Config config, Mode mode, USART_TypeDef* usart);
 void serial_print(const char *chaine, uint16_t length,USART_TypeDef* usart);
 char* serial_read(uint16_t length,USART_TypeDef* usart);
 USART_TypeDef* get_usart_instance(COMPort comport);
